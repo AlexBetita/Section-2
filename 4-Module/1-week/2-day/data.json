@@ -1,0 +1,87 @@
+{
+	"pokemons": [
+		{
+			"id": 1,
+			"name": "Pikachu",
+			"type": "Electric",
+			"level": 50,
+			"moves": [
+				{
+					"id": 1,
+					"name": "Thunderbolt",
+					"power": 90,
+					"type": "Electric"
+				},
+				{
+					"id": 2,
+					"name": "Quick Attack",
+					"power": 40,
+					"type": "Normal"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"name": "Bulbasaur",
+			"type": "Grass/Poison",
+			"level": 45,
+			"moves": [
+				{
+					"id": 3,
+					"name": "Solar Beam",
+					"power": 120,
+					"type": "Grass"
+				},
+				{
+					"id": 4,
+					"name": "Sludge Bomb",
+					"power": 90,
+					"type": "Poison"
+				}
+			]
+		}
+	],
+	"trainers": [
+		{
+			"id": 1,
+			"name": "Ash",
+			"pokemon_ids": [
+				1,
+				2
+			],
+			"hometown": "Pallet Town"
+		},
+		{
+			"id": 2,
+			"name": "Misty",
+			"pokemon_ids": [],
+			"hometown": "Cerulean City"
+		}
+	],
+	"moves": [
+		{
+			"id": 1,
+			"name": "Thunderbolt",
+			"power": 90,
+			"type": "Electric"
+		},
+		{
+			"id": 2,
+			"name": "Quick Attack",
+			"power": 40,
+			"type": "Normal"
+		},
+		{
+			"id": 3,
+			"name": "Solar Beam",
+			"power": 120,
+			"type": "Grass"
+		},
+		{
+			"id": 4,
+			"name": "Sludge Bomb",
+			"power": 90,
+			"type": "Poison"
+		}
+	]
+}
