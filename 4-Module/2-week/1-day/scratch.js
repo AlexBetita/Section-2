@@ -27,6 +27,7 @@
 // --
 // NoSql
 // document only
+
 // allows faster development time
 // easier to get into
 
@@ -35,7 +36,6 @@
 // super light
 // local database
 // not strict
-
 
 
 // Table
@@ -63,3 +63,10 @@
 // entity/table allows the programmer to utilize all the CRUD operations
 // semi/half CRUD
 // 1-3 operations on a given entity/table
+
+// CREATE TABLE «table name» (
+//     «column name» «data type»,
+//     «column name» «data type»,
+//     ...
+//     «column name» «data type»
+//   );
