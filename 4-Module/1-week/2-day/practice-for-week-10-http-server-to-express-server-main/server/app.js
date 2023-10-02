@@ -49,16 +49,17 @@
 // Your code here
 
 
-// const http = require('http');
+
 const express = require('express')
 
 const app = express()
-const port = 5000;
+
 app.use(express.json())
 
-app.post('/users/:userId', (req, res) => {
+app.get('/users/:userId', (req, res) => {
 	const userId = req.params.userId
 	res.send(userId)
 })
 
-app.listen(port, () => console.log('Server is listening on port', port))
+const port = 5000;
+app.listen(port, () => console.log('Server is listening on port', port));

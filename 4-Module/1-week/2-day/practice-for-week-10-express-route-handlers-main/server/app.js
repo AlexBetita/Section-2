@@ -27,19 +27,13 @@ const app = express();
 // Your code here
 app.use(express.json());
 
-// app.use((req, res, next) => {
-// 	console.log('Request Body:', req.body);
-// 	next();
-// });
-
 // get all the artists
 app.get('/artists', (req, res) => {
 	res.json(getAllArtists())
 })
 
-// Add an artist
+// add an artist
 app.post('/artists', (req, res) => {
-	// const { name } = req.body
 	const data = req.body
 	res.status(201)
 	res.json(addArtist(data))
