@@ -1,16 +1,17 @@
 const express = require('express')
 const app = express()
 require('dotenv').config()
+// const {User, Post } = require('./db/models')
 const { User, Post, Student, Course, Enrollment } = require('./db/models')
 
 app.use(express.json())
 
 // CRUD for Users
 // Sequelize generates functions for associations
-// set<className> function
-// get<className> function
-// add<className> function
-// create<className> function
+// set<className> function / plural and singular versions
+// get<className> function / plural and singular versions
+// add<className> function / plural and singular versions
+// create<className> function / plural and singular versions
 
 app.get('/users', async (req, res) => {
 	const users = await User.findAll()
@@ -25,56 +26,33 @@ app.get('/posts', async (req, res) => {
 })
 
 app.get('/users/:id/posts', async (req, res) => {
-	const {id} = req.params
-	const currentUser = await User.findByPk(id)
-
-	// plural
+	const { id } = req.params
 	// lazy loading
-	// grabbing information later
-	// pros
-	// speeds up time
-	// saves memory
-	// cons
-	// n+1
-	// can increase number of concurrent connections onto a db
+	// const currentUser = await User.findByPk(id)
 
-	const usersPosts = await currentUser.getPosts()
+	// // plural
+	// const usersPosts = await currentUser.getPosts()
 
-	// // eager loading
-	// const currentUser = await User.findOne({
-	// 	where: {
-	// 		id: 1
-	// 	},
-	// 	include: Post
-	// })
-
-
+	// eager loading
+	const usersPosts = await User.findOne({where: {id: id}, include: Post})
 	// res.json(currentUser)
 	res.json(usersPosts)
 })
 
 app.get('/posts/:id/users', async (req, res) => {
 	const { id } = req.params
-	const currentPost = await Post.findByPk(id)
+	// // lazy load
+	// const currentPost = await Post.findByPk(id)
 
-	// singular
-	const postUser = await currentPost.getUser()
+	// // singular
+	// const postUser = await currentPost.getUser()
+
+	// eager load
+	const postUser = await Post.findOne({where: {id: id}, include: User})
 
 
 	res.json(postUser)
 })
-
-// app.post('/posts/:userId', async (req, res) => {
-// 	const { userId } = req.params
-// 	const { title, content } = req.body
-// 	await Post.createUser({
-// 		title,
-// 		content,
-// 		userId
-// 	})
-
-// 	res.json({'message':'Successfully Created a new Post'})
-// })
 
 app.post('/users/:userId/posts', async (req, res) => {
 	const { userId } = req.params
@@ -99,9 +77,9 @@ app.post('/users/:userId/posts', async (req, res) => {
 		userId
 	})
 
-	// adding more than one post
-	// the post object has to be an instance of post
-	// in order to use the addposts
+	// // adding more than one post
+	// // the post object has to be an instance of post
+	// // in order to use the addposts
 	await currentUser.addPosts([post1,post2])
 
 	res.json({ 'message': 'Successfully Created a new Post' })
@@ -148,26 +126,19 @@ app.post('/courses/:courseId/students', async (req, res) => {
 
 	res.json({'message': 'Successfully created a new student!'})
 
-	// // eager load
-	// const coursesStudents = await Course.findOne({ where: { id: courseId }, include: Student })
-	// res.json(coursesStudents)
 })
 
 // adding a student to the course
 app.post('/courses/:courseId/students/:studentId', async (req, res) => {
 	const { courseId, studentId } = req.params
-	const { name } = req.body
-
 	const currentCourse = await Course.findByPk(courseId)
 
 	const currentStudent = await Student.findByPk(studentId)
 
-	await currentCourse.addStudents([currentStudent])
+	// await currentCourse.addStudents([currentStudent])
+	await currentStudent.addCourses([currentCourse])
 	res.json({ 'message': 'Successfully created a new student!' })
 
-	// // eager load
-	// const coursesStudents = await Course.findOne({ where: { id: courseId }, include: Student })
-	// res.json(coursesStudents)
 })
 
 
