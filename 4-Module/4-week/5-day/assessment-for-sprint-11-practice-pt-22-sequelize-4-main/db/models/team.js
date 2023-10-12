@@ -13,7 +13,19 @@ module.exports = (sequelize, DataTypes) => {
 		// define association here
 		this.belongsTo(models.Sport, { foreignKey: 'sportId' })
 
-		this.hasMany(models.Player, {foreignKey: 'currentTeamId', as: 'TeamRoster'})
+		// singluar of the functions
+		// get<className> - getSport
+		// create<className> - createSport
+		// add<className> - addSport
+		// set<className> - setSport
+
+		this.hasMany(models.Player, { foreignKey: 'currentTeamId', as: 'TeamRoster' })
+		
+		// singluar and plural of the functions
+		// get<className | superceded by alias> - getPlayer
+		// create<className> - createPlayer
+		// add<className> - addPlayer
+		// set<className> - setPlayer
     }
   }
   Team.init({

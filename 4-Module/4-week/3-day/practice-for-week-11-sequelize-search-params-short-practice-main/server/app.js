@@ -46,13 +46,13 @@ app.get('/musicians', async (req, res, next) => {
 	}
 
     // Add keys to the WHERE clause to match the lastName param, if it exists.
-    // End result: { where: { lastName: req.query.lastName } }
+	// End result: { where: { lastName: req.query.lastName } }
 
-	// Your code here
 	if (lastName) {
 		query.where.lastName = lastName
 	}
 
+	// Your code here
     // STEP 2: WHERE clauses on the associated Band model
     // ?bandName=XX
     // Add an object to the `include` array to include the Band model where the
@@ -61,9 +61,14 @@ app.get('/musicians', async (req, res, next) => {
 
 	// Your code here
 	if (bandName) {
-		query.include.push({ model: Band, where: { name: req.query.bandName } })
+		const band = {
+			model: Band,
+			where: {
+				name: bandName
+			}
+		}
+		query.include.push(band);
 	}
-
 
     // STEP 3: WHERE Clauses on the associated Instrument model
     // ?instrumentTypes[]=XX&instrumentTypes[]=YY
@@ -82,13 +87,13 @@ app.get('/musicians', async (req, res, next) => {
 
 	// Your code here
 	if (instrumentTypes) {
-		query.include.push({
-            model: Instrument,
-            where: { type: req.query.instrumentTypes },
-            through: { attributes: [] } // Omits the join table attributes
-        })
+		const types = {
+			model: Instrument,
+			where: { type: instrumentTypes },
+			through: { attributes: [] }
+		}
+		query.include.push(types);
 	}
-
 
     // BONUS STEP 4: Specify Musician attributes to be returned
     // ?&musicianFields[]=XX&musicianFields[]=YY

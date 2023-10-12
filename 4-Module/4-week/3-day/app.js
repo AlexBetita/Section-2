@@ -4,7 +4,7 @@ require('dotenv').config()
 // const {User, Post } = require('./db/models')
 const { Op } = require('sequelize')
 const Sequelize = require('sequelize')
-const { User, Post, Student, Course, Enrollment, Order } = require('./db/models')
+const { User, Post, Student, Course, Enrollment, Order, sequelize } = require('./db/models')
 
 app.use(express.json())
 
@@ -18,8 +18,9 @@ app.use(express.json())
 // pagination
 app.get('/users', async (req, res) => {
 
-
+	//
 	const { page, limit } = req.query
+	
 	const offset = (page ? parseInt(page) - 1 : 0) * parseInt(limit)
 
 	const users = await User.findAll(
@@ -39,32 +40,25 @@ app.get('/posts', async (req, res) => {
 })
 
 app.get('/orders', async (req, res) => {
-	// // where
-	// const minPrice = await Order.findOne({
-	// 	where: {
-	// 		amount: {
-	// 			[Op.lt] : 200
-	// 		}
-	// 	}
-	// })
+
 	// static function
 	// const minPrice = await Order.min('amount')
 	// const minPrice = await Order.max('amount')
 	// const minPrice = await Order.sum('amount')
 	// const minPrice = await Order.count('amount')
-	const minPrice = await Order.findAll(
-		{
-			attributes: ['productName', 'amount', 'price', [Sequelize.fn('COUNT', Sequelize.col('price'))]],
-			group: ['productName']
-		}
-	)
 
-	// SELECT productName, amount, price, COUNT(price)
-	// FROM Orders
-	// GROUP BY productName
+	// using manual approach
+	const data = await Order.findAll({
+		attributes: [
+			[sequelize.fn('MIN', sequelize.col('price')), 'minPrice'],
+			[sequelize.fn('MAX', sequelize.col('price')), 'maxPrice']
+		]
+	})
+
+	// SELECT MIN(Orders.amount) as minPrice FROM Orders;
 
 
-	res.json(minPrice)
+	res.json(data)
 })
 
 app.get('/users/:id/posts', async (req, res) => {

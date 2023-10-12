@@ -23,27 +23,27 @@ app.get('/toys', async (req, res, next) => {
 
     // A. Create an `allToys` variable that returns all toys
 	// Your code here
-	const allToys = await Toy.findAll()
+
+	const allToys = await Toy.findAll();
 
     // B. Create a `toysCount` variable that returns the total number of toy
     // records
     // Your code here
-	const toysCount = await Toy.count('price')
 
+	const toysCount = await Toy.count();
     // C. Create a `toysMinPrice` variable that returns the minimum price of all
     // the toys
 	// Your code here
-	const toysMinPrice = await Toy.min('price')
 
+	const toysMinPrice = await Toy.min('price');
     // D. Create a `toysMaxPrice` variable that returns the maximum price of all
     // the toys
 	// Your code here
-	const toysMaxPrice = await Toy.max('price')
-
+	const toysMaxPrice = await Toy.max('price');
     // E. Create a `toysSumPrice` variable that returns the sum of all of
     // the toy prices.
 	// Your code here
-	const toysSumPrice = await Toy.sum('price')
+	const toysSumPrice = await Toy.sum('price');
 
     res.json({
         toysCount,
@@ -69,11 +69,11 @@ app.get('/cats/:id/toys', async (req, res, next) => {
 			// Count all of this cat's toys, and display the value with a
 			// key of `toyCount`
 			// Your code here
-			[sequelize.fn('COUNT', sequelize.col('Toys.price')), 'toyCount'], // two arguments, function, optional <alias>
+			[sequelize.fn('COUNT', sequelize.col('Toys.color')), 'toyCount'],
 
             // Find the average price of this cat's toys, and display the
             // value with a key of `averageToyPrice`
-            // Your code here
+			// Your code here
 			[sequelize.fn('AVG', sequelize.col('Toys.price')), 'averageToyPrice'],
 
             // Find the total price of this cat's toys, and display the
@@ -93,18 +93,33 @@ app.get('/cats/:id/toys', async (req, res, next) => {
 
     // Define a new variable, `catData`, and set it equal to the `cat` variable converted to JSON
 	// Your code here
-	const catData = cat.toJSON() // object
+	const catData = cat.toJSON();
 
+	// const catData = {
+	// 	...catToysAggregateData
+	// }
+
+	// const catData = {
+	// 	averageToyPrice: catToysAggregateData.averageToyPrice
+	// }
     // Add the `toyCount`, `averageToyPrice`, and `totalToyPrice` keys to the
     // catData object, with their aggregate values from `catToysAggregateData`
-    // Your code here
+	// Your code here
+
+	// const catData = {
+	// 	toyCount: catToysAggregateData.toyCount,
+	// 	averageToyPrice: catToysAggregateData.averageToyPrice,
+	// 	totalToyPrice: catToysAggregateData.totalToyPrice
+	// }
+
 	catData.toyCount = catToysAggregateData.toyCount;
 	catData.averageToyPrice = catToysAggregateData.averageToyPrice;
-	catData.totalToyPrice = catToysAggregateData.totalToyPrice
+	catData.totalToyPrice = catToysAggregateData.totalToyPrice;
 
     // After the steps above are complete, refactor the line below to only
     // display `catData`
-    res.json({ cat, catData });
+	// res.json({ catToysAggregateData, cat });
+	res.json(catData)
 })
 
 

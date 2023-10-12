@@ -13,11 +13,11 @@ module.exports = {
      * }], {});
     */
 		await Order.bulkCreate([
-			{ amount: 100, price: 10}, // apple
-			{ amount: 200, price: 20}, // apple
-			{ amount: 300, price: 30}, // oranges
-			{ amount: 400, price: 40}, // oranges
-			{ amount: 500, price: 50}, // pears
+			{ amount: 100, price: 10},
+			{ amount: 200, price: 20},
+			{ amount: 300, price: 30},
+			{ amount: 400, price: 40},
+			{ amount: 500, price: 50},
 		])
   },
 
