@@ -19,7 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     location: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Store',
+	  modelName: 'Store',
+	  defaultScope: {
+		  attributes: {
+			 exclude: ['updatedAt', 'createdAt']
+		 }
+	 }
   });
   return Store;
 };
