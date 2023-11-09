@@ -5,6 +5,9 @@ import Movies from './components/Movies';
 
 // context
 const router = createBrowserRouter([
+	// top level paths
+	// inside the context of createBrowserRouter
+	// all these paths are absolute paths
 	{
 		path: '/',
 		element: <Home />
