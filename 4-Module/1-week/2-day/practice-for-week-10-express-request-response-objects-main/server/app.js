@@ -2,26 +2,70 @@
 const express = require('express');
 const app = express();
 
-app.use(express.json());
+app.use(express.json())
+
+/**
+ *  Basic Phase 1 - Plain-text response
+ *     Method: GET
+ *     Route: /version
+ *     Response (Text): "1.0.0"
+ */
+// Your code here
 
 app.get('/version', (req, res) => {
 	res.send('1.0.0')
 })
 
+/**
+ *  Basic Phase 2 - Route param and JSON response
+ *      Method: GET
+ *      Route: /viewers
+ *      Route Parameter: id
+ *      Response (JSON): user object with id, first name, last name,
+ *                birth date and list of favorite movies
+ *          id - route parameter
+ *          firstName - string
+ *          lastName - string
+ *          birthDate - date (format: MM/DD/YYYY)
+ *          favoriteMovies - array of strings
+ *
+ *  Hint: Use your name, birth date and favorite movies (as strings in the code)
+ *  combined with the id sent as a route parameter in the url
+ */
+// Your code here
+
 app.get('/viewers/:id', (req, res) => {
-	const id = req.params.id
+	const { id } = req.params
 	const profile = {
-		'id': id,
-		'firstName': 'Alex',
-		'lastName': 'Betita',
-		'birthDate': new Date('02/17/1992'),
-		'favoriteMovies': ['LOTR', 'Marvel Series']
+		"id": id,
+		"firstName": "Kate",
+		"lastName": "Cizewski",
+		"birthDate": new Date("03/15/2000"),
+		"favoriteMovies": ["Pride and prejudice", "Last Holiday"]
 	}
 	res.json(profile)
 })
 
+/** Basic Phase 3 - Query params in URL
+ *      Method: GET
+ *      Route: /info
+ *      Request query parameters: message
+ *      Response (Text): message query parameter reflected back to the user
+ *      Error Handling: If "message" is missing from the query string,
+ *                      then respond with the text "message required"
+ *
+ *      Sample routes:
+ *          /info?message=Hello, world!
+ *          /info?message=
+ *          /info
+ *      Sample responses, respectively (as seen in the browser):
+ *          Hello, world!
+ *          message required
+ *          message required
+ */
+// Your code here
 app.get('/info', (req, res) => {
-	let message = req.query.message
+	let { message } = req.query
 	if (!message) {
 		message = "message required"
 	}
@@ -61,6 +105,22 @@ app.get('/info', (req, res) => {
  *          { "id": 98765432, "name": "Honey Sweet", "year": 1967, "isFavorite": false }
  */
 // Your code here
+app.post('/movies', (req, res) => {
+	const { name, year, favorite } = req.body
+	const id = Math.random(100)
+	const resObj = {
+		"id": id,
+		"name": name,
+		"year": year,
+		"isFavorite": false
+	}
+
+	if (favorite) {
+		resObj['isFavorite'] = true
+	}
+
+	res.json(resObj)
+})
 
 /**
  *  Advanced Bonus Phase B - Research how to return static
